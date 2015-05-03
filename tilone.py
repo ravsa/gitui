@@ -10,6 +10,7 @@ passbox=None
 repobox=None
 root=None
 helv=None
+reset=None
 root,status=None,None
 def process():
 	global status
@@ -71,21 +72,23 @@ def reset():
 	repobox.delete(0,'end')
 	userbox.delete(0,'end')
 	status.set("")
-root=tk.Tk()
-init()
-logo=tk.PhotoImage(file='images/load.gif')
-tk.Label(root,image=logo).grid(rowspan=3,columnspan=2,row=0,column=0,stick='e')
-
-entryBox()
-sepretor(8,1)
-sepretor(9,1)
-submit=tk.Button(root,text='SUBMIT',command=getValues,bg='darkgrey')
-submit.grid(row=10,column=2,stick='e'+'s')
-reset=tk.Button(root,text='RESET',command=reset,bg='darkgrey')
-reset.grid(row=10,column=3,stick='w'+'s')
-sepretor(11,1)
-status=tk.StringVar()
-status.set('')
-statlab=tk.Label(root,textvariable=status).grid(rowspan=5,columnspan=3,row=12,column=0)
-root.mainloop()
-
+def main():
+	global root,status,reset
+	root=tk.Tk()
+	init()
+	logo=tk.PhotoImage(file='images/load.gif')
+	tk.Label(root,image=logo).grid(rowspan=3,columnspan=2,row=0,column=0,stick='e')
+	entryBox()
+	sepretor(8,1)
+	sepretor(9,1)
+	submit=tk.Button(root,text='SUBMIT',command=getValues,bg='darkgrey')
+	submit.grid(row=10,column=2,stick='e'+'s')
+	reset=tk.Button(root,text='RESET',command=reset,bg='darkgrey')
+	reset.grid(row=10,column=3,stick='w'+'s')
+	sepretor(11,1)
+	status=tk.StringVar()
+	status.set('')
+	statlab=tk.Label(root,textvariable=status).grid(rowspan=5,columnspan=3,row=12,column=0)
+	root.mainloop()
+if __name__=="__main__":
+	main()
