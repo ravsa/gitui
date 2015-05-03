@@ -43,11 +43,21 @@ def entryBox():
 	frame2.pack()
 	userbox=tk.Entry(frame2,width=30,font=tkFont.Font(family='helvetica',size=13))
 	userbox.pack()
-	passbox=tk.Entry(frame2,width=30,font=tkFont.Font(family='helvetica',size=13))
+	passbox=tk.Entry(frame2,width=30,font=tkFont.Font(family='helvetica',size=13),show='*')
 	passbox.pack()
 	repobox=tk.Entry(frame2,width=30,font=tkFont.Font(family='helvetica',size=13))
 	repobox.pack()
-
+def getValues():
+	global username,userbox,reponame,repobox,passbox,passwd
+	passwd=passbox.get()
+	username=userbox.get()
+	reponame=repobox.get()
+	print username,passwd,reponame
+def reset():
+	global userbox,passbox,repobox
+	passbox.delete(0,'end')
+	repobox.delete(0,'end')
+	userbox.delete(0,'end')
 root=tk.Tk()
 init()
 start=tk.PhotoImage(file='images/logo.gif')
@@ -55,9 +65,9 @@ bg=tk.Label(root,image=start)
 bg.place(x=0,y=0,relwidth=1,relheight=1)
 bg.after(1500,dest)
 root.after(1500,entryBox)
-#submit=tk.Button(root,text='SUBMIT')
-#submit.pack(side='left')
-#reset=tk.Button(root,text='RESET')
-#reset.pack(side='right')
+submit=tk.Button(root,text='SUBMIT',command=getValues)
+submit.pack(side='left')
+reset=tk.Button(root,text='RESET',command=reset)
+reset.pack(side='right')
 root.mainloop()
 
