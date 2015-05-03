@@ -11,48 +11,45 @@ passbox=None
 repobox=None
 root=None
 helv=None
-frame,frame1,frame2,frame3=None,None,None,None
-#child='curl '+'-u '+"'"+sys.argv[1]+"'"+':'+"'"+sys.argv[2]+"'"+' https://api.github.com/user/repos '+'-d '+'"'+'{'+'\\"name\\"'+':'+'\\"'+sys.argv[3]+'\\"'+'}'+'"'
-#cho=call(child,shell=True,stderr=PIPE)
-#if cho:
-#	print "Error in communication"
+root=None
+def process():
+	child='curl '+'-u '+"'"+username+"'"+':'+"'"+passwd+"'"+' https://api.github.com/user/repos '+'-d '+'"'+'{'+'\\"name\\"'+':'+'\\"'+reponame+'\\"'+'}'+'"'
+	cho=call(child,shell=True,stderr=PIPE)
+	if cho is not 0:
+		print "Error in communication"
+	
 def init():
 	global root,helv
 	root.geometry('800x500')
 	helv=tkFont.Font(family='helvetica',size=15)
 def dest():
 	bg.destroy()
+def sepretor(i,j):
+	tk.Label(root,text='').grid(row=i,column=j)
 def entryBox():
 
 	global userbox,passbox,repobox,root,helv
-	frame=tk.Frame(root,width=300,height=150)
-	frame.pack(side='top')
-	title=tk.Label(frame,text='Creating a New Repository',font=tkFont.Font(family='helvetica',size=22))
-	title.pack()
-	seprator=tk.Label(frame,text='',height=2)
-	seprator.pack()
-	frame1=tk.Frame(frame,width=150,height=80)
-	frame1.pack(side='left')
-	usrname=tk.Label(frame1,text='Username: ',font=helv)
-	usrname.pack()
-	passlab=tk.Label(frame1,text='Password: ',font=helv)
-	passlab.pack()
-	repolab=tk.Label(frame1,text='Repository: ',font=helv)
-	repolab.pack()
-	frame2=tk.Frame(frame,width=150,height=80)
-	frame2.pack()
-	userbox=tk.Entry(frame2,width=30,font=tkFont.Font(family='helvetica',size=13))
-	userbox.pack()
-	passbox=tk.Entry(frame2,width=30,font=tkFont.Font(family='helvetica',size=13),show='*')
-	passbox.pack()
-	repobox=tk.Entry(frame2,width=30,font=tkFont.Font(family='helvetica',size=13))
-	repobox.pack()
+	title=tk.Label(root,text='Creating a New Repository',font=tkFont.Font(family='helvetica',size=22))
+	title.grid(rowspan=2,stick='e',row=0,column=1)
+	usrname=tk.Label(root,text='Username: ',font=helv)
+	usrname.grid(rowspan=2,row=2,column=1)
+	passlab=tk.Label(root,text='Password: ',font=helv)
+	passlab.grid(rowspan=2,row=4,column=1)
+	repolab=tk.Label(root,text='Repository: ',font=helv)
+	repolab.grid(rowspan=2,row=6,column=1)
+	userbox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13))
+	userbox.grid(rowspan=2,row=2,column=2)
+	passbox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13),show='*')
+	passbox.grid(rowspan=2,row=4,column=2)
+	repobox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13))
+	repobox.grid(rowspan=2,row=6,column=2)
 def getValues():
 	global username,userbox,reponame,repobox,passbox,passwd
 	passwd=passbox.get()
 	username=userbox.get()
 	reponame=repobox.get()
 	print username,passwd,reponame
+	process()
 def reset():
 	global userbox,passbox,repobox
 	passbox.delete(0,'end')
@@ -63,11 +60,13 @@ init()
 start=tk.PhotoImage(file='images/logo.gif')
 bg=tk.Label(root,image=start)
 bg.place(x=0,y=0,relwidth=1,relheight=1)
-bg.after(1500,dest)
-root.after(1500,entryBox)
+bg.after(150,dest)
+root.after(150,entryBox)
+sepretor(8,1)
+sepretor(9,1)
 submit=tk.Button(root,text='SUBMIT',command=getValues)
-submit.pack(side='left')
+submit.grid(row=10,column=1,stick='e'+'s')
 reset=tk.Button(root,text='RESET',command=reset)
-reset.pack(side='right')
+reset.grid(row=10,column=2,stick='w'+'s')
 root.mainloop()
 
