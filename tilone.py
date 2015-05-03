@@ -34,7 +34,7 @@ def process():
 			status.set("repository created Successfully!\n url:https://github.com/{}/{}.git".format(username,reponame))
 def init():
 	global root,helv
-	root.geometry('800x500')
+	root.geometry('800x400')
 	helv=tkFont.Font(family='helvetica',size=15)
 def dest():
 	bg.destroy()
@@ -53,7 +53,7 @@ def entryBox():
 	repolab=tk.Label(root,text='Repository: ',font=helv)
 	repolab.grid(rowspan=2,row=6,column=2)
 	userbox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13))
-	userbox.grid(rowspan=2,row=2,column=3)
+	userbox.grid(rowspan=2,row=2,column=3,stick='w')
 	passbox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13),show='*')
 	passbox.grid(rowspan=2,row=4,column=3)
 	repobox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13))
@@ -73,9 +73,11 @@ def reset():
 	status.set("")
 root=tk.Tk()
 init()
+logo=tk.PhotoImage(file='images/load.gif')
+tk.Label(root,image=logo).grid(rowspan=3,columnspan=2,row=0,column=0,stick='e')
+
 entryBox()
 sepretor(8,1)
-
 sepretor(9,1)
 submit=tk.Button(root,text='SUBMIT',command=getValues,bg='darkgrey')
 submit.grid(row=10,column=2,stick='e'+'s')
