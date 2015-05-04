@@ -12,13 +12,18 @@ root=None
 helv=None
 reset=None
 hel="hello"
-root,status,logo=None,None,None
+root,status,logo,current_dir=None,None,None
 def warning(con):
 	global status
 	if con is 1:
 		tkMessageBox.showwarning("",status)
 	elif con is 0:
 		tkMessageBox.showinfo('',status)
+def currentDir():
+	global current_dir
+	current_dir=subprocess.Popen('pwd',stdout=subprocess.PIPE).communicate()[0]
+	current_dir=[i for i in current_dir.split('/')]
+	current_dir=current_dir[-1][:-1]
 
 def process():
 	global status
@@ -55,7 +60,7 @@ def dest():
 	bg.destroy()
 def sepretor(i,j):
 	tk.Label(root,text='').grid(row=i,column=j)
-def entryBox():
+
 
 	global userbox,passbox,repobox,root,helv
 	

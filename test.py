@@ -2,13 +2,9 @@ import Tkinter as tk
 import tilone as tl
 import tkMessageBox as tb
 import sys,subprocess,os
-current_dir=None
-def currentDir():
-	global current_dir
-	current_dir=subprocess.Popen('pwd',stdout=subprocess.PIPE).communicate()[0]
-	print current_dir
 root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
 frame1,frame2=None,None
+
 def gitstatus(event):
 	global noncommit,committed,stat,delete,branch
 	noncommit,committed,delete,branch='','','',''
