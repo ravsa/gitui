@@ -2,6 +2,7 @@ from subprocess import *
 import time
 import tkFont,tkMessageBox
 import Tkinter as tk
+import subprocess
 username=''
 passwd=''
 reponame=''
@@ -12,7 +13,7 @@ root=None
 helv=None
 reset=None
 hel="hello"
-root,status,logo,current_dir=None,None,None
+root,status,logo,current_dir=None,None,None,None
 def warning(con):
 	global status
 	if con is 1:
@@ -20,10 +21,9 @@ def warning(con):
 	elif con is 0:
 		tkMessageBox.showinfo('',status)
 def currentDir():
-	global current_dir
 	current_dir=subprocess.Popen('pwd',stdout=subprocess.PIPE).communicate()[0]
 	current_dir=[i for i in current_dir.split('/')]
-	current_dir=current_dir[-1][:-1]
+	return current_dir[-1][:-1]
 
 def process():
 	global status
@@ -61,10 +61,10 @@ def dest():
 def sepretor(i,j):
 	tk.Label(root,text='').grid(row=i,column=j)
 
-
+def entryBox():
 	global userbox,passbox,repobox,root,helv
 	
-	title=tk.Label(root,text='Creating a New Repository',font=tkFont.Font(family='helvetica',size=22))
+	title=tk.Label(root,text='  Creating a New Repository',font=tkFont.Font(family='helvetica',size=22))
 	title.grid(rowspan=2,stick='e',row=0,column=2)
 	usrname=tk.Label(root,text='Username: ',font=helv)
 	usrname.grid(rowspan=2,row=2,column=2)
@@ -77,6 +77,7 @@ def sepretor(i,j):
 	passbox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13),show='*')
 	passbox.grid(rowspan=2,row=4,column=3)
 	repobox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13))
+	repobox.insert(0,currentDir())
 	repobox.grid(rowspan=2,row=6,column=3)
 def getValues():
 	global username,userbox,reponame,repobox,passbox,passwd
