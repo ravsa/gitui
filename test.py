@@ -20,7 +20,7 @@ def gitstatus(event):
 			noncommit=noncommit+'\n'+i
 		if 'deleted:' in i:
 			delete=delete+'\n'+i
-	stat.set("""[STATUS]\n\n<BRANCH>:%s \n<NON-COMMITTED>: %s\n<COMMITTED>: %s\n<DELETED>: %s"""%(branch,noncommit,committed,delete))	
+	stat.set("""[STATUS]\n\n<BRANCH>:%s \n<NOT 2B COMMITTED>: %s\n<2B COMMITTED>: %s\n<DELETED>: %s"""%(branch,noncommit,committed,delete))	
 def creat_repo():
 	er=os.system('python tilone.py')
 	if er is not 0:
