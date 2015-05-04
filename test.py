@@ -3,8 +3,9 @@ import tilone as tl
 import tkMessageBox as tb
 import sys,subprocess,os
 root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
-def gitstatus():
+def gitstatus(event):
 	global noncommit,committed,stat,delete,branch
+	noncommit,committed,delete,branch='','','',''
 	sta=subprocess.Popen(['git','status'],stdout=subprocess.PIPE).communicate()[0]
 	flag=0
 	branch=subprocess.Popen(['git','branch'],stdout=subprocess.PIPE).communicate()[0]
@@ -34,7 +35,9 @@ def main():
 	tl.sepretor(1,0)
 	stat=tk.StringVar()
 	stat.set('')	
-	gitstatus()
-	tk.Label(root,textvariable=stat,width=30,height=20,relief='raised').grid(rowspan=3,columnspan=3)
+	gitstatus('')
+	statlab=tk.Label(root,textvariable=stat,width=36,height=20,relief='raised')
+	statlab.grid(rowspan=3,columnspan=3)
+	statlab.bind('<Enter>',gitstatus)
 	root.mainloop()
 main()
