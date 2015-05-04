@@ -1,6 +1,6 @@
 from subprocess import *
 import time
-import tkFont
+import tkFont,tkMessageBox
 import Tkinter as tk
 username=''
 passwd=''
@@ -11,28 +11,41 @@ repobox=None
 root=None
 helv=None
 reset=None
-root,status=None,None
+root,status,logo=None,None,None
+def warning(con):
+	global status
+	if con is 1:
+		tkMessageBox.showwarning("",status)
+	elif con is 0:
+		tkMessageBox.showinfo('',status)
+
 def process():
 	global status
 
 	if username is '':
-		status.set("Username field is empty")
+		status="Username field is empty"
+		warning(1)
 	elif passwd is '':
-		status.set("Password field is empty")
+		warning(1)
+		status="Password field is empty"
 	elif reponame is '':
-		status.set("Reponame field is empty")
+		status="Reponame field is empty"
+		warning(1)
 	else:
-		status.set("Processing")
 		child='curl '+'-u '+"'"+username+"'"+':'+"'"+passwd+"'"+' https://api.github.com/user/repos '+'-d '+'"'+'{'+'\\"name\\"'+':'+'\\"'+reponame+'\\"'+'}'+'"'
 		cho,chr=Popen(child,shell=True,stdout=PIPE).communicate()
 		if len(cho)<2:
-			status.set("connection error")
+			status="connection error"
+			warning(1)
 		elif len(cho)<110 and len(cho)>80:
-			status.set("username & password not matched !")
+			status="username & password not matched !"
+			warning(1)
 		elif len(cho)<400 and len(cho)>160:
-			status.set("repository already exists")
+			status="repository already exists"
+			warning(1)
 		elif len(cho)>2900:
-			status.set("repository created Successfully!\n url:https://github.com/{}/{}.git".format(username,reponame))
+			status="repository created Successfully!\n url:https://github.com/{}/{}.git".format(username,reponame)
+			warning(0)
 def init():
 	global root,helv
 	root.geometry('800x400')
@@ -71,9 +84,8 @@ def reset():
 	passbox.delete(0,'end')
 	repobox.delete(0,'end')
 	userbox.delete(0,'end')
-	status.set("")
 def main():
-	global root,status,reset
+	global root,status,reset,logo
 	root=tk.Tk()
 	init()
 	logo=tk.PhotoImage(file='images/load.gif')
@@ -85,10 +97,7 @@ def main():
 	submit.grid(row=10,column=2,stick='e'+'s')
 	reset=tk.Button(root,text='RESET',command=reset,bg='darkgrey')
 	reset.grid(row=10,column=3,stick='w'+'s')
-	sepretor(11,1)
-	status=tk.StringVar()
-	status.set('')
-	statlab=tk.Label(root,textvariable=status).grid(rowspan=5,columnspan=3,row=12,column=0)
+	
 	root.mainloop()
 if __name__=="__main__":
 	main()
