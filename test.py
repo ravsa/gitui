@@ -2,7 +2,13 @@ import Tkinter as tk
 import tilone as tl
 import tkMessageBox as tb
 import sys,subprocess,os
+current_dir=None
+def currentDir():
+	global current_dir
+	current_dir=subprocess.Popen('pwd',stdout=subprocess.PIPE).communicate()[0]
+	print current_dir
 root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
+frame1,frame2=None,None
 def gitstatus(event):
 	global noncommit,committed,stat,delete,branch
 	noncommit,committed,delete,branch='','','',''
@@ -20,24 +26,34 @@ def gitstatus(event):
 			noncommit=noncommit+'\n'+i
 		if 'deleted:' in i:
 			delete=delete+'\n'+i
-	stat.set("""[STATUS]\n\n<BRANCH>:%s \n<NOT 2B COMMITTED>: %s\n<2B COMMITTED>: %s\n<DELETED>: %s"""%(branch,noncommit,committed,delete))	
+	stat.set("""[STATUS]\n\n<BRANCH>:%s\n<NOT 2B COMMITTED>: %s\n<2B COMMITTED>: %s\n<DELETED>: %s"""%(branch,noncommit,committed,delete))	
 def creat_repo():
 	er=os.system('python tilone.py')
 	if er is not 0:
 		tb.showerror("","Python tilone.py module not found")
+def inpOpt():
+	global frame2
+	tk.Label(frame2,text='username').grid(row=0,column=0)
+	tk.Label(frame2,text="password").grid(row=1,column=0)
+
 def main():
-	global root,statlab,stat
+	global root,statlab,stat,frame1,frame2
 	root=tk.Tk()
-	root.geometry('700x500')
+	root.geometry('1000x700')
+	frame1=tk.Frame(root,width=500,height=700)
+	frame1.grid(row=0,column=0)
+	frame2=tk.Frame(root,width=500,height=700)
+	frame2.grid(row=0,column=1)
 	logo=tk.PhotoImage(file='images/load.gif')
 	tl.sepretor(0,0)
-	tk.Label(root,image=logo).grid(column=1)
+	tk.Label(frame1,image=logo).grid(column=1)
 	tl.sepretor(1,0)
 	stat=tk.StringVar()
 	stat.set('')	
 	gitstatus('')
-	statlab=tk.Label(root,textvariable=stat,width=36,height=20,relief='raised')
-	statlab.grid(rowspan=3,columnspan=3)
+	statlab=tk.Label(frame1,textvariable=stat,width=36,height=20,relief='raised')
+	statlab.grid(rowspan=4,columnspan=4)
 	statlab.bind('<Enter>',gitstatus)
+	inpOpt()	
 	root.mainloop()
 main()

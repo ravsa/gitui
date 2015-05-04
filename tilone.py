@@ -11,6 +11,7 @@ repobox=None
 root=None
 helv=None
 reset=None
+hel="hello"
 root,status,logo=None,None,None
 def warning(con):
 	global status
