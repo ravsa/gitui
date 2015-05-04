@@ -2,7 +2,7 @@ import Tkinter as tk
 import tilone as tl
 import tkMessageBox as tb
 import sys,subprocess,os
-root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,'',''
+root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
 def gitstatus():
 	global noncommit,committed,stat,delete,branch
 	sta=subprocess.Popen(['git','status'],stdout=subprocess.PIPE).communicate()[0]
@@ -19,22 +19,22 @@ def gitstatus():
 			noncommit=noncommit+'\n'+i
 		if 'deleted:' in i:
 			delete=delete+'\n'+i
-	stat='BRANCH: %s \nNON-COMMITTED: %s\nCOMMITTED: %s\nDELETED: %s'%(branch,noncommit,committed,delete)
-	print stat
+	stat.set("""[STATUS]\n\n<BRANCH>:%s \n<NON-COMMITTED>: %s\n<COMMITTED>: %s\n<DELETED>: %s"""%(branch,noncommit,committed,delete))	
 def creat_repo():
 	er=os.system('python tilone.py')
 	if er is not 0:
 		tb.showerror("","Python tilone.py module not found")
 def main():
-	global root,statlab
+	global root,statlab,stat
 	root=tk.Tk()
 	root.geometry('700x500')
 	logo=tk.PhotoImage(file='images/load.gif')
-	tk.Label(root,image=logo).grid(row=0)
+	tl.sepretor(0,0)
+	tk.Label(root,image=logo).grid(column=1)
 	tl.sepretor(1,0)
-	tk.Button(root,text='STATUS',command=creat_repo).grid(row=2)
-	#statlab=StringVar()
-		
+	stat=tk.StringVar()
+	stat.set('')	
 	gitstatus()
+	tk.Label(root,textvariable=stat,width=30,height=20,relief='raised').grid(rowspan=3,columnspan=3)
 	root.mainloop()
 main()
