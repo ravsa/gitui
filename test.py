@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import Tkinter as tk
 import pexpect 
 import tilone as tl
@@ -155,7 +156,13 @@ def main():
 	tk.Frame(root,width=50,height=600).grid(row=0,column=3)
 	frame3=tk.Frame(root,width=250,height=700)
 	frame3.grid(row=0,column=4)
-	logo=tk.PhotoImage(file='images/load.gif')
+	add=subprocess.Popen('echo ~',shell=True,stdout=subprocess.PIPE).communicate()[0]
+	add=add[:-1]+'/.gitui/images/load.gif'
+	try:
+		logo=tk.PhotoImage(file='images/load.gif')
+	except Exception,e:
+		logo=tk.PhotoImage(file=add)
+
 	tk.Label(frame1,image=logo).grid(column=1,stick='n')
 	stat=tk.StringVar()
 	stat.set('')	
