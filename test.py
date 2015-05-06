@@ -100,18 +100,19 @@ def push():
 		but.pack()	
 def init():
 	ask=tb.askquestion('','Is it first time')	
-	if ask is 'yes':
+	if ask == 'yes':
 		main=tk.Tk()
 		tk.Label(main,text='username').pack()
-		name=tk.Entry(main).pack()
+		name=tk.Entry(main)
+		name.pack()
 		tk.Label(main,text='  E-mail ').pack()
 		email=tk.Entry(main)
 		email.pack()
 		def apak():
 			nm=name.get()
 			el=email.get()
-			nm='git config --global user.name '+nm
-			el='git config --global email.name '+el
+			nm='git config --global user.name '+'"'+nm+'"'
+			el='git config --global user.email '+'"'+el+'"'
 			os.system(nm)
 			os.system(el)
 			os.system('git init')
