@@ -65,29 +65,37 @@ def cmt():
 	done.pack()
 def push():
 	global username,passwd,reponame
+	but=None
 	branchDef='master'
 	if check():
 		pass
 	else:
 		new=tk.Tk()
-		tk.Label(new,text="Branch*->",width=23,foreground='darkgreen').pack()
+		new.geometry('200x60')
+		la=tk.Label(new,text="Branch*->",width=23,foreground='darkgreen')
+		la.pack()
 		gk=tk.Entry(new,width=25,fg='darkblue')
 		gk.pack()
 		gk.insert(0,branchDef)
 		def don():
 			branchDef=gk.get()
-			new.destroy()
+			gk.destroy()
+			la.destroy()
+			but.destroy()
 			cmd='git remote add origin https://github.com/'+username+'/'+reponame+'.git' 
-			print os.system(cmd),username,passwd,reponame
-			#git='git push -u origin '+branchDef
-			#child=pexpect.spawn(git)
-			#child.expect("Username")
-			#child.sendline(username)
-			#child.expect("Password")
-			#child.sendline(passwd)
-			#child.expect("Delta")
-			#tb.showinfo('',"repository successfully updated on remote server")
-		tk.Button(new,text='DONE',width=23,bg='black',fg='white',command=don).pack()	
+			
+			git='git push -u origin '+branchDef
+			tk.Label(new,text='Processing...',).pack()
+			child=pexpect.spawn(git)
+			child.expect("Username")
+			child.sendline(username)
+			child.expect("Password")
+			child.sendline(passwd)
+			child.expect("Delta")
+			new.destroy()
+			tb.showinfo('',"repository successfully updated on remote server")
+		but=tk.Button(new,text='DONE',width=23,bg='black',fg='white',command=don)
+		but.pack()	
 	
 	
 def add():
