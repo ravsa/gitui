@@ -14,3 +14,5 @@ installation:
 
 restart terminal and type 'gitui'
 
+contact:
+	rvsbana@gmail.com
