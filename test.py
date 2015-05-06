@@ -4,7 +4,7 @@ import tkFont as tf
 import tkMessageBox as tb
 import sys,subprocess,os
 root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
-frame1,frame2=None,None
+frame1,frame2,frame3,commit=None,None,None,None
 
 def gitstatus(event):
 	global noncommit,committed,stat,delete,branch
@@ -24,25 +24,51 @@ def gitstatus(event):
 		if 'deleted:' in i:
 			delete=delete+'\n'+i
 	stat.set("""[STATUS]\n\n<BRANCH>:%s\n<NOT 2B COMMITTED>: %s\n<2B COMMITTED>: %s\n<DELETED>: %s"""%(branch,noncommit,committed,delete))	
-def creat_repo():
+def create_repo():
 	er=os.system('python tilone.py')
 	if er is not 0:
 		tb.showerror("","Python tilone.py module not found")
+def cmt():
+	global commit
+	new=tk.Tk()
+	
+#	commit=
+	commit='git '+'commit -m '+'"'+commit+'"'
+	
+def add():
+	os.system('git add *')
+	gitstatus('')
 def inpOpt():
-	global frame2
-	tk.Label(frame2,text='username',height=4,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=0,column=0)
-	tk.Label(frame2,text="password",height=4,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=2,column=0)
-	tk.Label(frame2,text="Repositoy",height=4,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=4,column=0)
-	#tl.username=tk.Entery
+	global frame2,frame3
+	tk.Label(frame2,text='username',height=3,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=0,column=0)
+	tk.Label(frame2,text="password",height=3,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=2,column=0)
+	tk.Label(frame2,text="Repositoy",height=3,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=4,column=0)
+	tl.username=tk.Entry(frame2)
+	tl.username.grid(row=0,column=1,stick='s')
+	tl.passwd=tk.Entry(frame2)
+	tl.passwd.grid(row=2,column=1,stick='s')
+	tl.repository=tk.Entry(frame2,foreground='darkgreen')
+	tl.repository.grid(row=4,column=1,stick='s')
+	tl.repository.insert(0,tl.currentDir())
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='NewRepo',command=create_repo,width=10,height=2).grid(row=0,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='  Add  ',command=add,width=10,height=2).grid(row=1,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Commit',command=cmt,width=10,height=2).grid(row=2,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Push',command=cmt,width=10,height=2).grid(row=3,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Pull',command=cmt,width=10,height=2).grid(row=4,column=0,stick='n')
+def action():
+	pass		
 def main():
-	global root,statlab,stat,frame1,frame2
+	global root,statlab,stat,frame1,frame2,frame3
 	root=tk.Tk()
 	root.geometry('1000x700')
-	frame1=tk.Frame(root,width=400,height=800)
+	frame1=tk.Frame(root,width=300,height=800)
 	frame1.grid(row=0,column=0)
 	tk.Frame(root,width=50,height=600).grid(row=0,column=1)
-	frame2=tk.Frame(root,width=400,height=800)
+	frame2=tk.Frame(root,width=350,height=800)
 	frame2.grid(row=0,column=2)
+	tk.Frame(root,width=50,height=600).grid(row=0,column=3)
+	frame3=tk.Frame(root,width=250,height=700)
+	frame3.grid(row=0,column=4)
 	logo=tk.PhotoImage(file='images/load.gif')
 	tk.Label(frame1,image=logo).grid(column=1,stick='n')
 	stat=tk.StringVar()
