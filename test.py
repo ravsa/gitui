@@ -41,6 +41,7 @@ def create_repo():
 		tb.showerror("","Python tilone.py module not found")
 def cmt():
 	global commit
+	done=None
 	new=tk.Tk()			
 	gk=tk.Text(new,width=35,height=10)
 	gk.pack()
@@ -48,11 +49,14 @@ def cmt():
 		commit=gk.get(0.0,'end')
 		commit='git '+'commit -m '+'"'+commit[:-1]+'"'
 		err=os.system(commit)
-		if err:
+		if err==0:
 			tb.showinfo('success','Successfully commited !')
+			new.destroy()
 		else:
 			tb.showerror('failed','Failed to commit!')
-	tk.Button(new,text='  DONE  ',command=com).pack()
+			new.destroy()
+	done=tk.Button(new,text='  DONE  ',command=com)
+	done.pack()
 def add():
 	os.system('git add *')
 	gitstatus('')
