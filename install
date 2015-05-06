@@ -1,0 +1,10 @@
+#!/bin/bash
+mkdir /tmp/.gitui
+cp -arvf * /tmp/.gitui
+cp -arvf /tmp/.gitui/ ~/
+chmod 733 ~/.gitui/test.py
+echo "PATH=$PATH:~/.gitui/" >> ~/.bashrc
+echo "alias gitui='main.py'" >>~/.bashrc
+echo ""
+echo "-->installed<--"
+echo "use 'gitui' command"
