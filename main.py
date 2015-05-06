@@ -64,6 +64,8 @@ def cmt():
 			new.destroy()
 	done=tk.Button(new,text='  DONE  ',command=com)
 	done.pack()
+def term():
+	os.system('gnome-terminal')
 def push():
 	global username,passwd,reponame
 	but=None
@@ -143,7 +145,7 @@ def inpOpt():
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='  Add  ',command=add,width=10,height=2).grid(row=2,column=0,stick='n')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Commit',command=cmt,width=10,height=2).grid(row=3,column=0,stick='n')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Push',command=push,width=10,height=2).grid(row=4,column=0,stick='n')
-	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Pull',width=10,height=2).grid(row=5,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='terminal',command=term,width=10,height=2).grid(row=5,column=0,stick='n')
 def main():
 	global root,statlab,stat,frame1,frame2,frame3
 	root=tk.Tk()
