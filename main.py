@@ -149,11 +149,11 @@ def inpOpt():
 def main():
 	global root,statlab,stat,frame1,frame2,frame3
 	root=tk.Tk()
-	root.geometry('1000x700')
-	frame1=tk.Frame(root,width=300,height=800)
+	root.geometry('900x600')
+	frame1=tk.Frame(root,width=300,height=600)
 	frame1.grid(row=0,column=0)
 	tk.Frame(root,width=50,height=600).grid(row=0,column=1)
-	frame2=tk.Frame(root,width=350,height=800)
+	frame2=tk.Frame(root,width=350,height=600)
 	frame2.grid(row=0,column=2)
 	tk.Frame(root,width=50,height=600).grid(row=0,column=3)
 	frame3=tk.Frame(root,width=250,height=700)
