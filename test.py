@@ -1,5 +1,6 @@
 import Tkinter as tk
 import tilone as tl
+import tkFont as tf
 import tkMessageBox as tb
 import sys,subprocess,os
 root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
@@ -29,26 +30,30 @@ def creat_repo():
 		tb.showerror("","Python tilone.py module not found")
 def inpOpt():
 	global frame2
-	tk.Label(frame2,text='username').grid(row=0,column=0)
-	tk.Label(frame2,text="password").grid(row=1,column=0)
-
+	tk.Label(frame2,text='username',height=4,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=0,column=0)
+	tk.Label(frame2,text="password",height=4,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=2,column=0)
+	tk.Label(frame2,text="Repositoy",height=4,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=4,column=0)
+	#tl.username=tk.Entery
 def main():
 	global root,statlab,stat,frame1,frame2
 	root=tk.Tk()
 	root.geometry('1000x700')
-	frame1=tk.Frame(root,width=500,height=700)
+	frame1=tk.Frame(root,width=400,height=800)
 	frame1.grid(row=0,column=0)
-	frame2=tk.Frame(root,width=500,height=700)
-	frame2.grid(row=0,column=1)
+	tk.Frame(root,width=50,height=600).grid(row=0,column=1)
+	frame2=tk.Frame(root,width=400,height=800)
+	frame2.grid(row=0,column=2)
 	logo=tk.PhotoImage(file='images/load.gif')
-	tl.sepretor(0,0)
-	tk.Label(frame1,image=logo).grid(column=1)
-	tl.sepretor(1,0)
+	tk.Label(frame1,image=logo).grid(column=1,stick='n')
 	stat=tk.StringVar()
 	stat.set('')	
 	gitstatus('')
+	tk.Label(frame1,text='').grid(column=0)
+	tk.Label(frame1,text='').grid(column=0)
+	tk.Label(frame1,text='').grid(column=0)
+	tk.Label(frame1,text='').grid(column=0)
 	statlab=tk.Label(frame1,textvariable=stat,width=36,height=20,relief='raised')
-	statlab.grid(rowspan=4,columnspan=4)
+	statlab.grid(rowspan=4,columnspan=4,stick='w')
 	statlab.bind('<Enter>',gitstatus)
 	inpOpt()	
 	root.mainloop()
