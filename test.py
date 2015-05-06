@@ -35,6 +35,8 @@ def check():
 		warn('password field is empty')
 		return 1
 	return 0
+def push():
+	pass
 def create_repo():
 	er=os.system('python tilone.py')
 	if er is not 0:
@@ -77,8 +79,6 @@ def inpOpt():
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Commit',command=cmt,width=10,height=2).grid(row=2,column=0,stick='n')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Push',command=cmt,width=10,height=2).grid(row=3,column=0,stick='n')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Pull',command=cmt,width=10,height=2).grid(row=4,column=0,stick='n')
-def action():
-	pass		
 def main():
 	global root,statlab,stat,frame1,frame2,frame3
 	root=tk.Tk()
