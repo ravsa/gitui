@@ -1,4 +1,5 @@
 import Tkinter as tk
+import pexpect 
 import tilone as tl
 import tkFont as tf
 import pexpect
@@ -6,6 +7,7 @@ import tkMessageBox as tb
 import sys,subprocess,os
 root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
 frame1,frame2,frame3,commit=None,None,None,None
+use,pwd,renme=None,None,None
 username,passwd,reponame='','',''
 def gitstatus(event):
 	global noncommit,committed,stat,delete,branch
@@ -26,7 +28,10 @@ def gitstatus(event):
 			delete=delete+'\n'+i
 	stat.set("""[STATUS]\n\n<BRANCH>:%s\n<NOT 2B COMMITTED>: %s\n<2B COMMITTED>: %s\n<DELETED>: %s"""%(branch,noncommit,committed,delete))	
 def check():
-	global username,passwd
+	global username,passwd,reponame,use,pwd,renme
+	passwd=pwd.get()
+	username=use.get()   
+	reponame=renme.get() 	
 	def warn(strng):
 		tb.showerror('error',strng)
 	if username is '':
@@ -36,8 +41,6 @@ def check():
 		warn('password field is empty')
 		return 1
 	return 0
-def push():
-	pass
 def create_repo():
 	er=os.system('python tilone.py')
 	if er is not 0:
@@ -60,17 +63,44 @@ def cmt():
 			new.destroy()
 	done=tk.Button(new,text='  DONE  ',command=com)
 	done.pack()
+def push():
+	global username,passwd,reponame
+	branchDef='master'
+	if check():
+		pass
+	else:
+		new=tk.Tk()
+		tk.Label(new,text="Branch*->",width=23,foreground='darkgreen').pack()
+		gk=tk.Entry(new,width=25,fg='darkblue')
+		gk.pack()
+		gk.insert(0,branchDef)
+		def don():
+			branchDef=gk.get()
+			new.destroy()
+			cmd='git remote add origin https://github.com/'+username+'/'+reponame+'.git' 
+			print os.system(cmd),username,passwd,reponame
+			#git='git push -u origin '+branchDef
+			#child=pexpect.spawn(git)
+			#child.expect("Username")
+			#child.sendline(username)
+			#child.expect("Password")
+			#child.sendline(passwd)
+			#child.expect("Delta")
+			#tb.showinfo('',"repository successfully updated on remote server")
+		tk.Button(new,text='DONE',width=23,bg='black',fg='white',command=don).pack()	
+	
+	
 def add():
 	os.system('git add *')
 	gitstatus('')
 def inpOpt():
-	global frame2,frame3,username,passwd,reponame
+	global frame2,frame3,use,pwd,renme
 	tk.Label(frame2,text='username',height=3,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=0,column=0)
 	tk.Label(frame2,text="password",height=3,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=2,column=0)
 	tk.Label(frame2,text="Repositoy",height=3,font=tf.Font(family='halvetica',size=15)).grid(rowspan=2,row=4,column=0)
 	use=tk.Entry(frame2)
 	use.grid(row=0,column=1,stick='s')
-	pwd=tk.Entry(frame2)
+	pwd=tk.Entry(frame2,show='*')
 	pwd.grid(row=2,column=1,stick='s')
 	renme=tk.Entry(frame2,foreground='darkgreen')
 	renme.grid(row=4,column=1,stick='s')
@@ -78,7 +108,7 @@ def inpOpt():
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='NewRepo',command=create_repo,width=10,height=2).grid(row=0,column=0,stick='n')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='  Add  ',command=add,width=10,height=2).grid(row=1,column=0,stick='n')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Commit',command=cmt,width=10,height=2).grid(row=2,column=0,stick='n')
-	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Push',command=cmt,width=10,height=2).grid(row=3,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Push',command=push,width=10,height=2).grid(row=3,column=0,stick='n')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Pull',command=cmt,width=10,height=2).grid(row=4,column=0,stick='n')
 def main():
 	global root,statlab,stat,frame1,frame2,frame3
