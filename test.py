@@ -1,6 +1,7 @@
 import Tkinter as tk
 import tilone as tl
 import tkFont as tf
+import pexpect
 import tkMessageBox as tb
 import sys,subprocess,os
 root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
