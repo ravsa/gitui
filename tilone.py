@@ -76,7 +76,7 @@ def entryBox():
 	userbox.grid(rowspan=2,row=2,column=3,stick='w')
 	passbox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13),show='*')
 	passbox.grid(rowspan=2,row=4,column=3)
-	repobox=tk.Entry(root,width=30,font=tkFont.Font(family='helvetica',size=13))
+	repobox=tk.Entry(root,width=30,fg='red',font=tkFont.Font(family='helvetica',size=13))
 	repobox.insert(0,currentDir())
 	repobox.grid(rowspan=2,row=6,column=3)
 def getValues():
