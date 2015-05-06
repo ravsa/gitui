@@ -82,10 +82,12 @@ def push():
 			gk.destroy()
 			la.destroy()
 			but.destroy()
+			
+			tk.Label(new,text='Processing...',).pack()
 			cmd='git remote add origin https://github.com/'+username+'/'+reponame+'.git' 
 			
+			
 			git='git push -u origin '+branchDef
-			tk.Label(new,text='Processing...',).pack()
 			child=pexpect.spawn(git)
 			child.expect("Username")
 			child.sendline(username)
@@ -96,8 +98,28 @@ def push():
 			tb.showinfo('',"repository successfully updated on remote server")
 		but=tk.Button(new,text='DONE',width=23,bg='black',fg='white',command=don)
 		but.pack()	
-	
-	
+def init():
+	ask=tb.askquestion('','Is it first time')	
+	if ask is 'yes':
+		main=tk.Tk()
+		tk.Label(main,text='username').pack()
+		name=tk.Entry(main).pack()
+		tk.Label(main,text='  E-mail ').pack()
+		email=tk.Entry(main)
+		email.pack()
+		def apak():
+			nm=name.get()
+			el=email.get()
+			nm='git config --global user.name '+nm
+			el='git config --global email.name '+el
+			os.system(nm)
+			os.system(el)
+			os.system('git init')
+			main.destroy()
+		tk.Button(main,text='DONE',command=apak).pack()
+	else:
+		os.system('git init')
+		i=tb.showinfo('','Initialized')
 def add():
 	os.system('git add *')
 	gitstatus('')
@@ -113,11 +135,13 @@ def inpOpt():
 	renme=tk.Entry(frame2,foreground='darkgreen')
 	renme.grid(row=4,column=1,stick='s')
 	renme.insert(0,tl.currentDir())
-	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='NewRepo',command=create_repo,width=10,height=2).grid(row=0,column=0,stick='n')
-	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='  Add  ',command=add,width=10,height=2).grid(row=1,column=0,stick='n')
-	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Commit',command=cmt,width=10,height=2).grid(row=2,column=0,stick='n')
-	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Push',command=push,width=10,height=2).grid(row=3,column=0,stick='n')
-	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Pull',command=cmt,width=10,height=2).grid(row=4,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Init',command=init,width=10,height=2).grid(row=0,column=0,stick='n')
+
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='NewRepo',command=create_repo,width=10,height=2).grid(row=1,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='  Add  ',command=add,width=10,height=2).grid(row=2,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Commit',command=cmt,width=10,height=2).grid(row=3,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Push',command=push,width=10,height=2).grid(row=4,column=0,stick='n')
+	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Pull',command=cmt,width=10,height=2).grid(row=5,column=0,stick='n')
 def main():
 	global root,statlab,stat,frame1,frame2,frame3
 	root=tk.Tk()
