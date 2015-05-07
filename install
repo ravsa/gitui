@@ -5,6 +5,8 @@ cp -arvf /tmp/.gitui/ ~/
 chmod 733 ~/.gitui/test.py
 echo "PATH=$PATH:~/.gitui/" >> ~/.bashrc
 echo "alias gitui='main.py'" >>~/.bashrc
+rm -rvf /tmp/.gitui
 echo ""
-echo "-->installed<--"
-echo "use 'gitui' command"
+echo "    -->installed<--"
+echo "   restart terminal"
+echo "    use cmd 'gitui'"

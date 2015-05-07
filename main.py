@@ -1,11 +1,18 @@
 #!/usr/bin/python
 import Tkinter as tk
 import pexpect 
-import tilone as tl
 import tkFont as tf
 import pexpect
 import tkMessageBox as tb
 import sys,subprocess,os
+add=None
+add=subprocess.Popen('echo ~',shell=True,stdout=subprocess.PIPE).communicate()[0]
+try:
+	import tilone as tl
+except Exception,e:
+	mod=add[:-1]+'/.gitui'
+	sys.path.append(mod)
+	import tilone as tl  
 root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
 frame1,frame2,frame3,commit=None,None,None,None
 use,pwd,renme=None,None,None
@@ -147,7 +154,7 @@ def inpOpt():
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Push',command=push,width=10,height=2).grid(row=4,column=0,stick='n')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='terminal',command=term,width=10,height=2).grid(row=5,column=0,stick='n')
 def main():
-	global root,statlab,stat,frame1,frame2,frame3
+	global root,statlab,stat,frame1,frame2,frame3,add
 	root=tk.Tk()
 	root.geometry('900x600')
 	frame1=tk.Frame(root,width=300,height=600)
