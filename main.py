@@ -147,7 +147,7 @@ def inpOpt():
 
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='NewRepo',command=create_repo,width=10,height=2).grid(row=1,column=0,stick='n')
 	def pad():
-		os.system('git add *')
+		os.system('git add * ')
 		gitstatus('')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='  Add  ',command=pad,width=10,height=2).grid(row=2,column=0,stick='n')
 	tk.Button(frame3,foreground='white',activebackground='blue',bg='black',text='Commit',command=cmt,width=10,height=2).grid(row=3,column=0,stick='n')
