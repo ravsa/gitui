@@ -7,12 +7,10 @@ import tkMessageBox as tb
 import sys,subprocess,os
 add=None
 add=subprocess.Popen('echo ~',shell=True,stdout=subprocess.PIPE).communicate()[0]
-try:
-	import tilone as tl
-except Exception,e:
-	mod=add[:-1]+'/.gitui'
-	sys.path.append(mod)
-	import tilone as tl  
+mod=add[:-1]+'/.gitui/'
+print mod
+sys.path.append(mod)
+import tilone as tl
 root,branch,noncommit,committed,statlab,stat,delete=None,None,'','',None,None,''
 frame1,frame2,frame3,commit=None,None,None,None
 use,pwd,renme=None,None,None
@@ -52,6 +50,8 @@ def check():
 def create_repo():
 	er=os.system('python tilone.py')
 	if er is not 0:
+		er=os.system('python ~/.gitui/tilone.py')
+	elif er is not 0: 
 		tb.showerror("","Python tilone.py module not found")
 def cmt():
 	global commit
@@ -132,7 +132,7 @@ def init():
 		os.system('git init')
 		i=tb.showinfo('','Initialized')
 def add():
-	os.system('git add *')
+	o=subprocess.Popen('git add *',shell=True,stdout=subprocess.PIPE).communicate()[0]
 	gitstatus('')
 def inpOpt():
 	global frame2,frame3,use,pwd,renme

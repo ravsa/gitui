@@ -95,7 +95,12 @@ def main():
 	global root,status,reset,logo
 	root=tk.Tk()
 	init()
-	logo=tk.PhotoImage(file='images/load.gif')
+	add=subprocess.Popen('echo ~',shell=True,stdout=subprocess.PIPE).communicate()[0]
+	add=add[:-1]+'/.gitui/images/load.gif'
+	try:
+		logo=tk.PhotoImage(file='images/load.gif')
+	except Exception,e:
+		logo=tk.PhotoImage(file=add)
 	tk.Label(root,image=logo).grid(rowspan=3,columnspan=2,row=0,column=0,stick='e')
 	entryBox()
 	sepretor(8,1)
